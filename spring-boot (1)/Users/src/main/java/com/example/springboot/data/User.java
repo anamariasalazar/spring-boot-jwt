@@ -1,16 +1,25 @@
 package com.example.springboot.data;
 
 import com.example.springboot.dto.UserDto;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Document
+
 public class User {
+    @Id
     private String id;
     private String name;
+    @Indexed(unique = true)
     private String email;
     private String lastName;
     private String createdAt;
+    @Transient
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
     public User(String id,UserDto userDto) {

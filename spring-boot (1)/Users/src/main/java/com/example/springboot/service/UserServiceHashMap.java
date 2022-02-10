@@ -5,14 +5,15 @@ import com.example.springboot.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
+
 public class UserServiceHashMap implements UserService{
     private final HashMap<String, User> userHashMap = new HashMap<>();
 
-    @Override
+    //@Override
     public Boolean create(User user) {
         try {
             userHashMap.put(user.getId(), user);
@@ -22,18 +23,18 @@ public class UserServiceHashMap implements UserService{
         }
     }
 
-    @Override
+    //@Override
     public User findById(String id) {
         return userHashMap.get(id);
     }
 
-    @Override
+    //@Override
     public List<User> getAll() {
         ArrayList<User> users = new ArrayList<>(userHashMap.values());
         return users;
     }
 
-    @Override
+    //@Override
     public Boolean deleteById(String id) {
         try {
             userHashMap.remove(id);
@@ -43,7 +44,7 @@ public class UserServiceHashMap implements UserService{
         }
     }
 
-    @Override
+    //@Override
     public Boolean update(String userId,User user) {
         try {
             userHashMap.put(userId,user);
@@ -53,7 +54,7 @@ public class UserServiceHashMap implements UserService{
         }
     }
 
-    @Override
+    //@Override
     public String next(){
         ArrayList<String> keys = new ArrayList<>(userHashMap.keySet());
         String id="1";
@@ -61,5 +62,15 @@ public class UserServiceHashMap implements UserService{
             id = String.valueOf(Integer.parseInt(keys.get(keys.size()-1))+1);
         }
         return id;
+    }
+
+    //@Override
+    public List<User> findUsersLN(String queryText) {
+        return null;
+    }
+
+    //@Override
+    public List<User> findusercreatedafter(Date startDate) {
+        return null;
     }
 }
