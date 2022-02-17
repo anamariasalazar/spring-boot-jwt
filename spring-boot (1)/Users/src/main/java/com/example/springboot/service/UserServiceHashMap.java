@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class UserServiceHashMap implements UserService{
+public class UserServiceHashMap{
     private final HashMap<String, User> userHashMap = new HashMap<>();
 
     //@Override
@@ -73,4 +73,6 @@ public class UserServiceHashMap implements UserService{
     public List<User> findusercreatedafter(Date startDate) {
         return null;
     }
+
+
 }

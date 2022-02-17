@@ -1,13 +1,17 @@
 package com.example.springboot.data;
 
+import com.example.springboot.controller.auth.RoleEnum;
 import com.example.springboot.dto.UserDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Document
 
@@ -18,26 +22,57 @@ public class User {
     @Indexed(unique = true)
     private String email;
     private String lastName;
-    private String createdAt;
-    @Transient
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    private LocalDate createdAt;
+    private String passwordHash;
+    private List<RoleEnum> roles;
 
+    public User(){}
     public User(String id,UserDto userDto) {
+        LocalDate localDate = LocalDate.now();
         this.id=id;
         this.name = userDto.getName();
         this.email = userDto.getEmail();
         this.lastName = userDto.getEmail();
-        this.createdAt = dateTimeFormatter.format(LocalDate.now());
+        this.createdAt = localDate;
+        this.passwordHash = BCrypt.hashpw(userDto.getPassword(), BCrypt.gensalt());
 
     }
+    public void update(UserDto user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.lastName = user.getLastName();
+        if (user.getPassword() != null) {
+            this.passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        }
+    }
 
-    public User( String id, UserDto userDto, String createdAt) {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public List<RoleEnum> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEnum> roles) {
+        this.roles = roles;
+    }
+
+    /*public User( String id, UserDto userDto, String createdAt) {
         this.id=id;
         this.name = userDto.getName();
         this.email = userDto.getEmail();
         this.lastName = userDto.getEmail();
         this.createdAt = createdAt;
-    }
+    }*/
 
 
     public String getId() {
@@ -68,11 +103,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -83,7 +118,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", createdAt='" + createdAt + '\'' +
+                ", createdAt=" + createdAt +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

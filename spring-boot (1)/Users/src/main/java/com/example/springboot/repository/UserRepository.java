@@ -12,5 +12,6 @@ import java.util.List;
 public interface UserRepository extends MongoRepository<User,String> {
     List<User> findByName(String queryText);
     List<User> findByLastName(String queryText);
-    List<User> findusercreatedafter(Date startDate);
+    List<User> findBycreatedAtAfter(Date startDate);
+    User findByEmail(String queryText);
 }

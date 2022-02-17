@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -39,11 +40,14 @@ public class UserController
 
     @PutMapping( "/{id}" )
     public ResponseEntity<Boolean> update( @RequestBody UserDto userDto, @PathVariable String id ) {
-        User user = new User(id,userDto,userService.findById(id).getCreatedAt());
+        User user = new User();
+        user.setId(id);
+        user.update(userDto);
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(id,user));
     }
 
     @DeleteMapping( "/{id}" )
+    @RolesAllowed("ADMIN")
     public ResponseEntity<Boolean> delete( @PathVariable String id ) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.deleteById(id));
     }

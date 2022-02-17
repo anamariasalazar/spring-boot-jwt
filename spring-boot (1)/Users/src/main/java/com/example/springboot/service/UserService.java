@@ -16,4 +16,5 @@ public interface UserService {
     String next();
     List<User> findUsersLN (String queryText);
     List<User> findusercreatedafter (Date startDate);
+    User findByEmail(String email);
 }
