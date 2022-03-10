@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@Document
+@Document(collation = "task")
 
 public class User {
     @Id

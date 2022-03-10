@@ -1,5 +1,6 @@
 package com.example.task.controller;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.example.task.data.Task;
 import com.example.task.dto.TaskDto;
 import com.example.task.service.TaskService;
@@ -8,12 +9,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 @RestController
 @RequestMapping( "/v1/task" )
 
 public class TaskController {
     private final TaskService taskService;
+    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
     public TaskController(@Autowired TaskService taskService) {
         this.taskService = taskService;
@@ -30,19 +34,21 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<Boolean> create( @RequestBody TaskDto taskDto ) {
-        Task task = new Task(taskService.next(), taskDto);
+    public ResponseEntity<Task> create( @RequestBody TaskDto taskDto ) {
+        String date = dateTimeFormatter.format(LocalDate.now());
+        Task task = new Task(String.valueOf(taskService.next()), taskDto,date);
         return ResponseEntity.status(HttpStatus.OK).body(taskService.create(task));
+
     }
 
     @PutMapping( "/{id}" )
-    public ResponseEntity<Boolean> update( @RequestBody TaskDto taskDto, @PathVariable String id ) {
-        Task task = new Task(id,taskDto,taskService.findById(id).getCreated());
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(task,id));
+    public ResponseEntity<Task> update( @RequestBody TaskDto taskDto, @PathVariable String id ) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(taskDto,id));
     }
 
     @DeleteMapping( "/{id}" )
     public ResponseEntity<Boolean> delete( @PathVariable String id ) {
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.deleteById(id));
+        taskService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }

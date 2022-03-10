@@ -39,7 +39,7 @@ public class AuthController
     {
         // TODO: Implement findByEmail method
         User user = userService.findByEmail( loginDto.email );
-        System.out.println(user.toString());
+        System.out.println(loginDto.toString());
         System.out.println(BCrypt.checkpw( loginDto.password, user.getPasswordHash() ));
         if ( BCrypt.checkpw( loginDto.password, user.getPasswordHash() ) )
         {

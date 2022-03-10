@@ -9,6 +9,7 @@ public class TaskDto {
     private String assignedTo;
     private String dueDate;
 
+    public TaskDto(){}
     public TaskDto(String name, String description, Status status, String assignedTo, String dueDate) {
         this.name = name;
         this.description = description;

@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
-public class TaskServiceHashMap implements TaskService {
+public class TaskServiceHashMap  {
     private final HashMap<String, Task> taskHashMap = new HashMap<>();
 
-    @Override
     public Boolean create(Task task) {
         try {
             taskHashMap.put(task.getId(), task);
@@ -20,18 +18,15 @@ public class TaskServiceHashMap implements TaskService {
             return false;
         }    }
 
-    @Override
     public Task findById(String id) {
         return taskHashMap.get(id);
     }
 
-    @Override
     public List<Task> getAll() {
         ArrayList<Task> tasks = new ArrayList<>(taskHashMap.values());
         return new ArrayList<Task>(taskHashMap.values());
     }
 
-    @Override
     public Boolean deleteById(String id) {
         try{
             taskHashMap.remove(id);
@@ -41,7 +36,6 @@ public class TaskServiceHashMap implements TaskService {
         }
     }
 
-    @Override
     public Boolean update(Task task, String id) {
         try {
             taskHashMap.put(id,task);
@@ -51,7 +45,6 @@ public class TaskServiceHashMap implements TaskService {
         }
     }
 
-    @Override
     public String next(){
         ArrayList<String> keys = new ArrayList<>(taskHashMap.keySet());
         String id="1";

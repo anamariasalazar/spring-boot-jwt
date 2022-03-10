@@ -14,26 +14,17 @@ public class Task {
     private String assignedTo;
     private String dueDate;
     private String created;
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
-    public Task(String id, TaskDto taskDto) {
+
+    public Task(){}
+    public Task(String id, TaskDto taskDto, String date) {
         this.id=id;
         this.name = taskDto.getName();
         this.description = taskDto.getDescription();
         this.status = taskDto.getStatus();
         this.assignedTo = taskDto.getAssignedTo();
         this.dueDate = taskDto.getDueDate();
-        this.created = dateTimeFormatter.format(LocalDate.now());
-    }
-
-    public Task(String id, TaskDto taskDto, String created) {
-        this.id=id;
-        this.name = taskDto.getName();
-        this.description = taskDto.getDescription();
-        this.status = taskDto.getStatus();
-        this.assignedTo = taskDto.getAssignedTo();
-        this.dueDate = taskDto.getDueDate();
-        this.created = created;
+        this.created = date;
     }
 
     public String getId() {

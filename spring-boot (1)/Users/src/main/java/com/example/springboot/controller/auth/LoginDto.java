@@ -6,6 +6,7 @@ public class LoginDto
 
     String password;
 
+    public LoginDto(){}
     public LoginDto( String email, String password )
     {
         this.email = email;
@@ -20,5 +21,13 @@ public class LoginDto
     public String getPassword()
     {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginDto{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

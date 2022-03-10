@@ -1,19 +1,20 @@
 package com.example.task.service;
 
 import com.example.task.data.Task;
+import com.example.task.dto.TaskDto;
 
 import java.util.List;
 
 public interface TaskService {
-    Boolean create(Task task );
+    Task create(Task task );
 
     Task findById( String id );
 
     List<Task> getAll();
 
-    Boolean deleteById( String id );
+    void deleteById( String id );
 
-    Boolean update(Task task, String id );
+    Task update(TaskDto taskDto, String id );
 
-    String next();
+    Integer next();
 }
